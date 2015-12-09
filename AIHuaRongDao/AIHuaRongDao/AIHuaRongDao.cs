@@ -17,7 +17,7 @@ namespace AIHuaRongDao
     {
         private Panel plSelected;//记录选中的控件ID
         iPanel mypanel;
-        AIMachine myAI;
+        StateList myAI;
         List<state> result;
         public AIHuaRongDao()
         {
@@ -29,7 +29,7 @@ namespace AIHuaRongDao
         {
             //先建一个界面类
             mypanel = new iPanel();
-            myAI = new AIMachine(mypanel);
+            myAI = new StateList(mypanel);
             result = new List<state>();
             // 显示初始化方格的位置    
             showState(mypanel.state0,1,0);            

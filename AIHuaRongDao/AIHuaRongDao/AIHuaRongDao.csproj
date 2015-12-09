@@ -50,7 +50,10 @@
     <Compile Include="AIHuaRongDao.Designer.cs">
       <DependentUpon>AIHuaRongDao.cs</DependentUpon>
     </Compile>
-    <Compile Include="AIMachine.cs" />
+    <Compile Include="MultiThreading.cs" />
+    <Compile Include="StateList.cs" />
+    <Compile Include="AIStruct.cs" />
+    <Compile Include="AIWaytoFind.cs" />
     <Compile Include="Panel.cs" />
     <Compile Include="state.cs" />
     <Compile Include="Program.cs" />

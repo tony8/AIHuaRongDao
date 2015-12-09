@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AIHuaRongDao
 {
-    public enum searchType :byte
-    {
-        BFS = 1 ,
-        DFS = 2
-    };
     //public enum Direction : int
     //{
     //    UP = 1,
@@ -19,8 +15,19 @@ namespace AIHuaRongDao
     //    left = 3,
     //    right = 4,
     //};
+    //System.Threading.Tasks a = new System.Threading.Tasks();
+    
+    //使用多线程减少计算时间，启发式算法时不能使用多线程并行计算
+    //对于状态表open中的前4个状态，同时计算4个状态的下一个状态
+    // 然后按照前后顺序添加成小集合，再一次性加入大集合
+    //方法1：找一个状态的一下个状态
+    //方法二：将一个状态集合不重复的添加到另一个集合中
+    //3.判断是否成功
+    //初始化时输入状态遍历的方法
+    //即对状态表添加时方法不同
+    //做一个分析界面，输出广度优先遍历方法和启发式算法的性能优缺点
 
-    class AIMachine
+    class StateList
     {
         public List<state> OpenList;//待展开的结点列表
         public List<state> ClosedList;//已展开过的结点列表 
@@ -28,7 +35,7 @@ namespace AIHuaRongDao
         state finishS;//结束状态 曹操位置为【3，1】
         public List<state> sucStateList;//记录成功路径
         public int searchCount;
-        public AIMachine(iPanel myP)
+        public StateList(iPanel myP)
         {
             //初始化开始状态
             startState = myP.state0;

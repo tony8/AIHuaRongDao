@@ -19,3 +19,9 @@ C:\Mylife\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.csproj.GenerateResour
 C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\bin\Debug\AIHuaRongDao.exe.config
 C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.exe
 C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.pdb
+C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\bin\Debug\AIHuaRongDao.exe
+C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\bin\Debug\AIHuaRongDao.pdb
+C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.AIHuaRongDao.resources
+C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.Properties.Resources.resources
+C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.csproj.GenerateResource.Cache
+C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.csprojResolveAssemblyReference.cache
