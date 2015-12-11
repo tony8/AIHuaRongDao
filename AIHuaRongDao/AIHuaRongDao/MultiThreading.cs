@@ -37,15 +37,15 @@ namespace AIHuaRongDao
         internal static void multiCalNextState(List<state> list)
         {
             //多个线程同时进行
-            ThreadStart NextState = new ThreadStart(MultiThreading.findNextState());
+            //ThreadStart NextState = new ThreadStart(MultiThreading.findNextState());
             //Thread a = new Thread(findNextState());
             //Thread a = new Thread(findNextState());
             //Thread a = new Thread(findNextState());
             //Thread a = new Thread(findNextState());
-            for (int i = 0; i < MultiNum; i++)
-            {
-                MultiOne[i] = list[i];
-            }
+            //for (int i = 0; i < MultiNum; i++)
+            //{
+            //    MultiOne[i] = list[i];
+            //}
         }
 
         internal static List<state> findNextState(state stateNow)

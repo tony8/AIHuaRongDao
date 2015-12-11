@@ -10,7 +10,18 @@ using System.Threading;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 //定义一个界面的状态
-
+/* P1 = 0,//口
+P4 = 1,//田
+P2V = 2,//日
+P2H = 3,//口口
+* 1.曹操 田
+* 2.关羽 口口
+* 3.赵云  日
+* 4.张飞  日
+* 5.马超  日
+* 6.黄忠  日
+* 7.8.9.10 小兵 口
+*/
 namespace AIHuaRongDao
 {  
     public partial class AIHuaRongDao : Form
@@ -22,13 +33,28 @@ namespace AIHuaRongDao
         public AIHuaRongDao()
         {
             InitializeComponent();
+            //下拉菜单初始化
+            comboBoxLevel.Items.Add("简单");
+            comboBoxLevel.Items.Add("中等");
+            comboBoxLevel.Items.Add("困难");
+            //默认简单
+            comboBoxLevel.SelectedItem = comboBoxLevel.Items[0];
+
         }
       
        
         private void Form1_Load(object sender, EventArgs e)
-        {
+        {          
+            //显示默认设置
+            MyComboBoxPanel myPanel = new MyComboBoxPanel((string)comboBoxLevel.SelectedItem);
+            foreach (var one in myPanel.list)
+            {               
+                    comboBoxPanel.Items.Add(one.name);
+            }
+            comboBoxPanel.SelectedItem = comboBoxPanel.Items[0];
+        
             //先建一个界面类
-            mypanel = new iPanel();
+            mypanel = new iPanel(new StartPanel((string)comboBoxPanel.SelectedItem));
             myAI = new StateList(mypanel);
             result = new List<state>();
             // 显示初始化方格的位置    
@@ -123,18 +149,7 @@ namespace AIHuaRongDao
             showBFSAndDFS(searchType.DFS);                  
         }
 
-        /* P1 = 0,//口
-    P4 = 1,//田
-    P2V = 2,//日
-    P2H = 3,//口口
- * 1.曹操 田
- * 2.关羽 口口
- * 3.赵云  日
- * 4.张飞  日
- * 5.马超  日
- * 6.黄忠  日
- * 7.8.9.10 小兵 口
- */
+
         private Panel tranPanel(int id) 
         {//根据ID找到人物所在面板
             switch (id) 
@@ -239,9 +254,32 @@ namespace AIHuaRongDao
             Thread.Sleep(500);
         }
 
-       private void button3_Click(object sender, EventArgs e)
+    
+       private void comboBoxPanel_SelectedIndexChanged(object sender, EventArgs e)
        {
+           MyComboBoxPanel item = comboBoxPanel.SelectedItem as MyComboBoxPanel;
+           // 执行操作
+           //item.Action();
+       }
 
+       private void comboBoxLevel_SelectedIndexChanged(object sender, EventArgs e)
+       {
+           comboBoxPanel.Items.Clear();
+           MyComboBoxPanel myPanel = new MyComboBoxPanel((string)comboBoxLevel.SelectedItem);
+           foreach (var one in myPanel.list)
+           {
+               comboBoxPanel.Items.Add(one.name);
+           }
+       }
+
+       private void btnselectOpening_Click(object sender, EventArgs e)
+       {  //确认布局
+           //先建一个界面类
+           mypanel = new iPanel(new StartPanel((string)comboBoxPanel.SelectedItem));
+           myAI = new StateList(mypanel);
+           result = new List<state>();
+           // 显示初始化方格的位置    
+           showState(mypanel.state0, 1, 0);       
        }
 
     }

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace AIHuaRongDao
 {
-    struct state
+    internal struct state
     {
         private ulong PlstateNum;
         public ulong plstateNum
@@ -160,9 +160,17 @@ namespace AIHuaRongDao
             return zeroL;
         }
         //public static bool calculateState(state S0, operate op, out state nextS)
+     
+        
+        /// <summary>
+        /// 判断某个操作是否可行,可以移动就返回执行后的状态plshow，否则false
+        /// </summary>
+        /// <param name="S0state" plshow></param>
+        /// <param name="op"></param>
+        /// <param name="nextStste"></param>
+        /// <returns></returns>
         public static bool calculateState(byte[,] S0state, operate op, out byte[,] nextStste)
-        {//判断某个操作是否可行,可以就返回执行后的状态，否则false
-            //输入plshow数表1，和操作，输出是否可行，out 下一个数表plshow
+        {
              nextStste = new byte[5, 4];
              byte[,] temps0 = new byte[5, 4];
              temps0 = S0state;
@@ -174,11 +182,11 @@ namespace AIHuaRongDao
              Point LocP = getLocation(temps0, op.PersonID);
             Point[] zero = new Point[2];
             zero = getZero(temps0);
-            Point size = findPersonLSize(op.PersonID);           
+           // Point size = findPersonLSize(op.PersonID);           
             //nextS = S0;//赋初值   
             //nextS.selectID = op.PersonID;
             //找到移动人物的方格种类
-            int style = findStyle(op.PersonID);
+            PStyles style = findStyle(op.PersonID);
             Point zero1 = new Point(zero[0].Y,zero[0].X);
             Point zero2 = new Point(zero[1].Y, zero[1].X);
             //人物方块在数表中的位置 pox为第几行poy为第几列
@@ -192,7 +200,8 @@ namespace AIHuaRongDao
                         return false;    
                     switch (style)
                     {//向上时
-                        case 1://直接换
+                        //case 1://直接换
+                        case PStyles.P1://直接换
                             if (new Point( pRow - 1,pCol) == zero1 || new Point( pRow - 1,pCol) == zero2)
                             {
                                 nextStste[pRow, pCol] = 0;
@@ -201,7 +210,8 @@ namespace AIHuaRongDao
                             }
                             else 
                                 return false;                               
-                        case 2: //日
+                        //case 2: //日
+                        case PStyles.P2V: //日
                             if (pRow + 1 > 4) return false;//-------------
                             if (new Point(pRow - 1, pCol) == zero1 || new Point(pRow - 1,pCol) == zero2)
                             {
@@ -211,7 +221,8 @@ namespace AIHuaRongDao
                             }
                             else
                                 return false;                                 
-                        case 3: //口口
+                        //case 3: //口口
+                        case PStyles.P2H:  //口口
                              if (pCol+ 1 > 3) return false;//-------------
                             if (new Point(pRow- 1, pCol ) == zero1 && new Point(pRow - 1, pCol+ 1 ) == zero2)
                             {
@@ -223,7 +234,8 @@ namespace AIHuaRongDao
                             }
                             else
                                 return false;  
-                        case 4: //田
+                        //case 4: //田
+                        case PStyles.P4:  //田
                              if (pRow + 1 > 4) return false;//-------------
                             if (new Point(pRow- 1, pCol ) == zero1 || new Point(pRow- 1, pCol ) == zero2)
                             {
@@ -242,7 +254,7 @@ namespace AIHuaRongDao
                         return false;
                     switch (style)
                     {       //向下时
-                        case 1://直接换
+                        case PStyles.P1://直接换
                             if (new Point(pRow+ 1, pCol ) == zero1 || new Point(pRow + 1, pCol) == zero2)
                             {
                                 nextStste[pRow, pCol] = 0;
@@ -250,8 +262,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false;  
-                        case 2: //日
+                                return false;
+                        case PStyles.P2V: //日
                             if (pRow + 2 > 4) //边界控制
                                 return false;
                             if (new Point(pRow+ 2, pCol ) == zero1 || new Point(pRow+ 2, pCol) == zero2)
@@ -261,8 +273,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false; 
-                        case 3: //口口
+                                return false;
+                        case PStyles.P2H:  //口口
                              if (pCol + 1 > 3) return false;//-------------
                             if (new Point(pRow+ 1, pCol ) == zero1 && new Point(pRow+1, pCol + 1) == zero2)
                             {  
@@ -273,8 +285,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false; 
-                        case 4: //田
+                                return false;
+                        case PStyles.P4:  //田
                             if (pRow + 2 > 4 || pCol + 1 > 3) //边界控制
                                 return false;
                             if (new Point(pRow+ 2, pCol ) == zero1 && new Point(pRow+2, pCol + 1) == zero2)
@@ -294,7 +306,7 @@ namespace AIHuaRongDao
                         return false;
                     switch (style)
                     {           //向左时
-                        case 1://直接换
+                        case PStyles.P1://直接换
                             if (new Point(pRow, pCol-1) == zero1 || new Point(pRow, pCol-1 ) == zero2)
                             { 
                                 nextStste[pRow, pCol] = 0;
@@ -302,8 +314,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false; 
-                        case 2: //日
+                                return false;
+                        case PStyles.P2V: //日
                              if (pRow + 1 > 4) return false;//-------------
                             if (new Point(pRow, pCol-1) == zero1 && new Point(pRow+1, pCol-1) == zero2)
                             {
@@ -314,8 +326,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false; 
-                        case 3: //口口           
+                                return false;
+                        case PStyles.P2H:  //口口 
                             if (pCol+ 1 > 3) return false;//-------------
                             if (new Point(pRow, pCol-1) == zero1 || new Point(pRow, pCol -1) == zero2)
                             { 
@@ -324,8 +336,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false; 
-                        case 4: //田
+                                return false;
+                        case PStyles.P4:  //田
                              if (pCol+ 1 > 3||pRow+ 1>4) return false;//-------------
                             if (new Point(pRow, pCol-1 ) == zero1 && new Point(pRow + 1, pCol - 1) == zero2)
                             {
@@ -344,7 +356,7 @@ namespace AIHuaRongDao
                         return false;
                     switch (style)
                     {           //向右时
-                        case 1://直接换
+                        case PStyles.P1://直接换
                             if (new Point(pRow, pCol+1) == zero1 || new Point(pRow , pCol+ 1) == zero2)
                             {
                                 nextStste[pRow, pCol] = 0;
@@ -352,8 +364,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false; 
-                        case 2: //日
+                                return false;
+                        case PStyles.P2V: //日
                              if (pRow + 1>4) return false;//-------------
                             if (new Point(pRow, pCol+1) == zero1 && new Point(pRow + 1, pCol + 1) == zero2)
                             { 
@@ -364,8 +376,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false; 
-                        case 3: //口口
+                                return false;
+                        case PStyles.P2H:  //口口
                             if (pCol + 2 > 3) //边界控制
                                 return false;
                             if (new Point(pRow, pCol+2) == zero1 || new Point(pRow , pCol+ 2) == zero2)
@@ -375,8 +387,8 @@ namespace AIHuaRongDao
                                 return true;
                             }
                             else
-                                return false; 
-                        case 4: //田
+                                return false;
+                        case PStyles.P4:  //田
                             if (pCol + 2 > 3) //边界控制
                                 return false;
                             if (new Point(pRow, pCol+2) == zero1 && new Point(pRow + 1, pCol + 2) == zero2)
@@ -407,83 +419,106 @@ namespace AIHuaRongDao
       * 6.黄忠  日
       * 7.8.9.10 小兵 口
          */
-        public static Point findPersonLSize(int ID)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        //public static Point findPersonLSize(int ID)
+        //{
+        //    switch (ID)
+        //    {
+        //        case 1: return new Point(2, 2);
+        //        case 2: return new Point(2, 1);
+        //        case 3: return new Point(1, 2);
+        //        case 4: return new Point(1, 2);
+        //        case 5: return new Point(1, 2);
+        //        case 6: return new Point(1, 2);
+        //        case 7: return new Point(1, 1);
+        //        case 8: return new Point(1, 1);
+        //        case 9: return new Point(1, 1);
+        //        case 10: return new Point(1, 1);
+        //        default: return new Point(0, 0);
+        //    }
+        //}
+
+        //P1 = 0,//口
+        //P4 = 1,//田
+        //P2V = 2,//日
+        //P2H = 3,//口口
+        //P0 = 5 空格       
+        
+        public static PStyles findStyle(int ID) 
         {
+            PStyles myStyle ;
             switch (ID)
             {
-                case 1: return new Point(2, 2);
-                case 2: return new Point(2, 1);
-                case 3: return new Point(1, 2);
-                case 4: return new Point(1, 2);
-                case 5: return new Point(1, 2);
-                case 6: return new Point(1, 2);
-                case 7: return new Point(1, 1);
-                case 8: return new Point(1, 1);
-                case 9: return new Point(1, 1);
-                case 10: return new Point(1, 1);
-                default: return new Point(0, 0);
+                case 1: 
+                    myStyle = PStyles.P4;
+                    break;
+                case 2: 
+                       myStyle = PStyles.P2H; 
+                    break;
+                case 3: 
+                    myStyle = PStyles.P2V; 
+                    break;
+                case 4: 
+                    myStyle = PStyles.P2V; 
+                    break;
+                case 5: 
+                    myStyle = PStyles.P2V; 
+                    break;
+                case 6: 
+                    myStyle = PStyles.P2V;
+                    break;
+                case 7: 
+                    myStyle = PStyles.P1;
+                    break;
+                case 8: 
+                    myStyle = PStyles.P1;
+                    break;
+                case 9:
+                    myStyle = PStyles.P1;
+                    break;
+                case 10: 
+                    myStyle = PStyles.P1;
+                    break;
+                default: 
+                    myStyle = PStyles.P0;
+                    break;
             }
-        }
-        public static int findStyle(int ID) 
-        {
-            int squreNum ;
-            switch (ID)
-            {
-                case 1: squreNum = 4; break;
-                case 2: squreNum = 3; break;
-                case 3: squreNum = 2; break;
-                case 4: squreNum = 2; break;
-                case 5: squreNum = 2; break;
-                case 6: squreNum = 2; break;
-                case 7: squreNum = 1; break;
-                case 8: squreNum = 1; break;
-                case 9: squreNum = 1; break;
-                case 10: squreNum = 1; break;
-                default: squreNum = 0; break;
-            }
-            return squreNum;
+            return myStyle;
         }
       
-
+        /// <summary>
+        /// 将小兵的序号全部变成7,从显示状态变为存储状态
+        /// </summary>
+        ///同时考虑修改selectedID 
+        /// <param name="plstate"></param>
+        /// <returns></returns>
         public static byte[,] plShow2computer(byte[,] plstate) 
-        {//由于4个小兵样子一样，所以位置可以对调，所以共有11-3=8种可能性
-            //将小兵的序号全部变成7
-            //同时考虑修改selectedID 
+        {
             byte[,] temp = new byte[5, 4];
             for (int i = 0; i < plstate.GetLength(0); i++)
             {
                 for (int j = 0; j < plstate.GetLength(1); j++)
                 {
                     if (plstate[i, j] > 7) 
-                        plstate[i, j] = 7;
-                   
+                        plstate[i, j] = 7;                   
                     temp[i, j] = plstate[i, j];
                 }
             }
             return temp;
-        }
-        //public static byte[,] plShow2Same(byte[,] plstate)
-        //{//由于4个小兵样子一样，所以位置可以对调，所以共有11-3=8种可能性
-        //    //将小兵的序号全部变成7
-        //    //同时考虑修改selectedID 
-        //    byte[,] temp = new byte[5, 4];
-        //    for (int i = 0; i < plstate.GetLength(0); i++)
-        //    {
-        //        for (int j = 0; j < plstate.GetLength(1); j++)
-        //        {
-        //            if (plstate[i, j] > 7)
-        //                plstate[i, j] = 7;
-        //            else if (plstate[i, j] > 2)
-        //                plstate[i, j] = 3;
-        //            temp[i, j] = plstate[i, j];
-        //        }
-        //    }
-        //    return temp;
-        //}
+        }      
 
+        /// <summary>
+        /// 将小兵序号从全7变为7\8\9\10,方便显示
+        ///由于4个小兵样子一样，所以位置可以对调，所以共有11-3=8种可能性
+        /// </summary>
+        /// <param name="plstate"></param>
+        /// <returns></returns>
         public static byte[,] plComputer2show(byte[,] plstate)
-        {//由于4个小兵样子一样，所以位置可以对调，所以共有11-3=8种可能性
-            //将小兵的序号按顺序变成7、 8、9、10
+        {
             byte[,] newplState = new byte[5, 4];
             newplState = plstate;
             byte[,] temp = new byte[5, 4];
@@ -505,15 +540,19 @@ namespace AIHuaRongDao
             }
             return temp;
         }
-
+        /// <summary>
+        /// 判断2个状态是否相同
+        /// </summary>
+        /// <param name="a 状态1"></param>
+        /// <param name="b 状态2"></param>
+        /// <returns></returns>
         public static bool istheSameState(ulong a,ulong b) 
-        {//判断2个状态是否相同            
+        {         
             ulong stand = 7;
             ulong tempa = 0;
             ulong tempb = 0;
             a = a >> 3;
-            b = b >> 3;
-           
+            b = b >> 3;           
             for (int j = 0; j < 20; j++)
             {
                 tempa = stand & a;
@@ -527,10 +566,64 @@ namespace AIHuaRongDao
                 }                   
                 a = a >> 3;
                 b = b >> 3;
-            }
-            
+            }            
              return true;             
         }
+
+        /// <summary>
+        /// 输入某状态，输出所有可行的下一状态，并且赋值fatherID   
+        /// </summary>
+        /// <param name="a1"></param>
+        /// <returns></returns>
+        internal static List<state> findState(state a1)
+        {
+            byte[,] pltempS0 = state.Num2Plcomputer(a1.plstateNum);
+
+            //show a1
+            //byte[,] showA1 = new byte[5, 4];
+            //showA1 = state.plComputer2show(state.Num2Plcomputer(a1.plstateNum));
+            //每次的初始状态都相同
+            List<state> nextS = new List<state>();
+            for (byte id = 1; id < 11; id++)
+            {//每个人物
+                for (int dir = 4; dir > 0; dir--)
+                {//每个方向 
+                    byte[,] plshowS0 = new byte[5, 4];
+                    plshowS0 = state.plComputer2show(pltempS0);
+                    byte[,] plnextshow = new byte[5, 4];
+                    operate tempOp = new operate();
+                    tempOp.PersonID = id;
+                    tempOp.dir = (Direction)dir;
+                    state oneOfNextS = new state();
+                    //得到PLcomputer
+
+                    //byte[,] tempshow1 = new byte[5, 4];
+                    //tempshow1 = state.plComputer2show(state.Num2Plcomputer(plnum));
+
+                    //判断某个操作是否可行,可以就返回执行后的状态，否则false
+                    if (state.calculateState(plshowS0, tempOp, out plnextshow))
+                    {//该操作可行
+                        //对父节点赋值
+                        byte[,] tempPlnextshow = plnextshow;
+                        oneOfNextS.plstateNum = state.Plcomputer2Num(state.plShow2computer(tempPlnextshow));
+                        oneOfNextS.FatherID = a1.sID;
+                        //public static byte correctSelectID(byte[,] pl,byte  selectID)
+                        oneOfNextS.selectID = state.correctSelectID(plnextshow, id);
+                        nextS.Add(oneOfNextS);
+                    }
+                }
+            }
+            //显示
+            //for (int i = 0; i < nextS.Count; i++)
+            //{
+            //    //
+            //    byte[,] a = new byte[5, 4];
+            //    ulong plnum = nextS[i].plstateNum;
+            //    a = state.plComputer2show(state.Num2Plcomputer(plnum));
+            //}
+            return nextS;
+        }
+
     }
      
    

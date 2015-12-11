@@ -25,3 +25,12 @@ C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.AIHuaRongDao.res
 C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.Properties.Resources.resources
 C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.csproj.GenerateResource.Cache
 C:\Mylife\Code\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.csprojResolveAssemblyReference.cache
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\bin\Debug\AIHuaRongDao.exe.config
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.exe
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.pdb
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.AIHuaRongDao.resources
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.Properties.Resources.resources
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.csproj.GenerateResource.Cache
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\bin\Debug\AIHuaRongDao.exe
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\bin\Debug\AIHuaRongDao.pdb
+E:\MyGit\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\AIHuaRongDao\obj\Debug\AIHuaRongDao.csprojResolveAssemblyReference.cache

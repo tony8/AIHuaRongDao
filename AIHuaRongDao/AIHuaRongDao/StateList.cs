@@ -7,14 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace AIHuaRongDao
-{
-    //public enum Direction : int
-    //{
-    //    UP = 1,
-    //    down = 2,
-    //    left = 3,
-    //    right = 4,
-    //};
+{   
     //System.Threading.Tasks a = new System.Threading.Tasks();
     
     //使用多线程减少计算时间，启发式算法时不能使用多线程并行计算
@@ -318,27 +311,27 @@ namespace AIHuaRongDao
             return false;//搜索失败
 
         }
-        private List<state> findState(state a1) 
+        private List<state> findState(state a1)
         {//找到某一状态的所有下一状态,并且赋值fatherID   
             byte[,] pltempS0 = state.Num2Plcomputer(a1.plstateNum);
-                    
+
             //show a1
             byte[,] showA1 = new byte[5, 4];
             showA1 = state.plComputer2show(state.Num2Plcomputer(a1.plstateNum));
             //每次的初始状态都相同
-           
+
             List<state> nextS = new List<state>();
-            for (byte id = 1; id < 11; id++) 
+            for (byte id = 1; id < 11; id++)
             {//每个人物
-                for (int dir = 4; dir >0;dir-- )
+                for (int dir = 4; dir > 0; dir--)
                 {//每个方向 
                     byte[,] plshowS0 = new byte[5, 4];
                     plshowS0 = state.plComputer2show(pltempS0);
                     byte[,] plnextshow = new byte[5, 4];
-                    operate tempOp= new operate();
+                    operate tempOp = new operate();
                     tempOp.PersonID = id;
                     tempOp.dir = (Direction)dir;
-                    state oneOfNextS = new state();                   
+                    state oneOfNextS = new state();
                     //得到PLcomputer
 
                     //byte[,] tempshow1 = new byte[5, 4];
@@ -348,12 +341,12 @@ namespace AIHuaRongDao
                     if (state.calculateState(plshowS0, tempOp, out plnextshow))
                     {//该操作可行
                         //对父节点赋值
-                        byte[,] tempPlnextshow = plnextshow;   
+                        byte[,] tempPlnextshow = plnextshow;
                         oneOfNextS.plstateNum = state.Plcomputer2Num(state.plShow2computer(tempPlnextshow));
                         oneOfNextS.FatherID = a1.sID;
                         //public static byte correctSelectID(byte[,] pl,byte  selectID)
-                        oneOfNextS.selectID = state.correctSelectID(plnextshow,id);
-                        nextS.Add(oneOfNextS);         
+                        oneOfNextS.selectID = state.correctSelectID(plnextshow, id);
+                        nextS.Add(oneOfNextS);
                     }
                 }
             }
@@ -369,17 +362,17 @@ namespace AIHuaRongDao
         }
         private List<state> findNextState(state a1)
         {//找到该状态的可加入表的下一状态
-             List<state> tpSNext = new List<state>();
-             List<state> NextState = new List<state>();
-             tpSNext = findState(a1);
+            List<state> tpSNext = new List<state>();
+            List<state> NextState = new List<state>();
+            tpSNext = state.findState(a1);
 
             //去掉已经有的状态
             for (int k = 0; k < tpSNext.Count; k++)
             {
                 bool flagOpen = false;
                 bool flagClosed = false;
-               
-                for (int i = 0; i < ClosedList.Count; i++) 
+
+                for (int i = 0; i < ClosedList.Count; i++)
                 {
                     //当2个不同小兵移动时，数表相同就算相同
                     //if (ClosedList[i].plstateNum == tpSNext[k].plstateNum)
@@ -390,20 +383,20 @@ namespace AIHuaRongDao
                     continue;
 
                 for (int i = 0; i < OpenList.Count; i++)
-                {                   
-                     if (state.istheSameState(OpenList[i].plstateNum, tpSNext[k].plstateNum))
-                  // if (OpenList[i].plstateNum == tpSNext[k].plstateNum)
+                {
+                    if (state.istheSameState(OpenList[i].plstateNum, tpSNext[k].plstateNum))
+                        // if (OpenList[i].plstateNum == tpSNext[k].plstateNum)
                         flagOpen = true;
                 }
                 if (flagOpen || flagClosed)
                 {//不加入
                 }
-                else 
+                else
                 { //将新状态加入到opened列表
                     NextState.Add(tpSNext[k]);
                 }
             }
-          
+
             //显示
             //for (int i = 0; i < NextState.Count;i++ ) 
             //{
