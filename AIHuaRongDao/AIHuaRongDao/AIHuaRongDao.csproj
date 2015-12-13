@@ -52,7 +52,7 @@
     </Compile>
     <Compile Include="MultiThreading.cs" />
     <Compile Include="MyComboBoxPanel.cs" />
-    <Compile Include="StateList.cs" />
+    <Compile Include="Search.cs" />
     <Compile Include="AIStruct.cs" />
     <Compile Include="AIWaytoFind.cs" />
     <Compile Include="Panel.cs" />

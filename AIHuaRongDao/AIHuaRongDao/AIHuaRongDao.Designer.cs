@@ -40,7 +40,7 @@
             this.panelZhaoyun = new System.Windows.Forms.Panel();
             this.btnBFS = new System.Windows.Forms.Button();
             this.btnDFS = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnHS = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBoxtimeShow = new System.Windows.Forms.TextBox();
             this.lblTimeshow = new System.Windows.Forms.Label();
@@ -154,14 +154,15 @@
             this.btnDFS.UseVisualStyleBackColor = true;
             this.btnDFS.Click += new System.EventHandler(this.btnDFS_Click);
             // 
-            // button3
+            // btnHS
             // 
-            this.button3.Location = new System.Drawing.Point(17, 68);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(195, 45);
-            this.button3.TabIndex = 13;
-            this.button3.Text = "启发式搜索";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnHS.Location = new System.Drawing.Point(17, 68);
+            this.btnHS.Name = "btnHS";
+            this.btnHS.Size = new System.Drawing.Size(195, 45);
+            this.btnHS.TabIndex = 13;
+            this.btnHS.Text = "启发式搜索";
+            this.btnHS.UseVisualStyleBackColor = true;
+            this.btnHS.Click += new System.EventHandler(this.btnHS_Click);
             // 
             // groupBox1
             // 
@@ -254,7 +255,6 @@
             this.comboBoxPanel.Size = new System.Drawing.Size(138, 22);
             this.comboBoxPanel.TabIndex = 16;
             this.comboBoxPanel.Text = "组长偷懒";
-            this.comboBoxPanel.SelectedIndexChanged += new System.EventHandler(this.comboBoxPanel_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -317,7 +317,7 @@
             // 
             this.groupBoxSearch.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBoxSearch.Controls.Add(this.btnBFS);
-            this.groupBoxSearch.Controls.Add(this.button3);
+            this.groupBoxSearch.Controls.Add(this.btnHS);
             this.groupBoxSearch.Controls.Add(this.btnDFS);
             this.groupBoxSearch.Location = new System.Drawing.Point(433, 186);
             this.groupBoxSearch.Name = "groupBoxSearch";
@@ -371,25 +371,25 @@
         public System.Windows.Forms.Panel panelS3;
         public System.Windows.Forms.Panel panelS4;
         public System.Windows.Forms.Panel panelGuanyu;
-        private System.Windows.Forms.Button btnBFS;
-        private System.Windows.Forms.Button btnDFS;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnMove;
-        private System.Windows.Forms.TextBox txtPath;
-        private System.Windows.Forms.TextBox txtShowCount;
-        private System.Windows.Forms.Label lblPath;
-        private System.Windows.Forms.Label lblSearchCount;
-        private System.Windows.Forms.Panel panelChaoC;
-        private System.Windows.Forms.TextBox textBoxtimeShow;
+        public System.Windows.Forms.Button btnBFS;
+        public System.Windows.Forms.Button btnDFS;
+        public System.Windows.Forms.Button btnHS;
+        public System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.Button btnMove;
+        public System.Windows.Forms.TextBox txtPath;
+        public System.Windows.Forms.TextBox txtShowCount;
+        public System.Windows.Forms.Label lblPath;
+        public System.Windows.Forms.Label lblSearchCount;
+        public System.Windows.Forms.Panel panelChaoC;
+        public System.Windows.Forms.TextBox textBoxtimeShow;
         private System.Windows.Forms.Label lblTimeshow;
         public System.Windows.Forms.ComboBox comboBoxPanel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBoxStart;
-        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.GroupBox groupBoxStart;
+        public System.Windows.Forms.Label label3;
         public System.Windows.Forms.ComboBox comboBoxLevel;
-        private System.Windows.Forms.Button btnselectOpening;
-        private System.Windows.Forms.GroupBox groupBoxSearch;
+        public System.Windows.Forms.Button btnselectOpening;
+        public System.Windows.Forms.GroupBox groupBoxSearch;
     }
 }
 

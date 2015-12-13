@@ -169,7 +169,7 @@ namespace AIHuaRongDao
         /// <param name="op"></param>
         /// <param name="nextStste"></param>
         /// <returns></returns>
-        public static bool calculateState(byte[,] S0state, operate op, out byte[,] nextStste)
+        public static bool calculateState(byte[,] S0state, Operate op, out byte[,] nextStste)
         {
              nextStste = new byte[5, 4];
              byte[,] temps0 = new byte[5, 4];
@@ -591,7 +591,7 @@ namespace AIHuaRongDao
                     byte[,] plshowS0 = new byte[5, 4];
                     plshowS0 = state.plComputer2show(pltempS0);
                     byte[,] plnextshow = new byte[5, 4];
-                    operate tempOp = new operate();
+                    Operate tempOp = new Operate();
                     tempOp.PersonID = id;
                     tempOp.dir = (Direction)dir;
                     state oneOfNextS = new state();
@@ -623,6 +623,7 @@ namespace AIHuaRongDao
             //}
             return nextS;
         }
+  
 
     }
      

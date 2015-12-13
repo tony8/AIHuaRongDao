@@ -28,38 +28,32 @@ namespace AIHuaRongDao
     {
         private Panel plSelected;//记录选中的控件ID
         iPanel mypanel;
-        StateList myAI;
+        Search mySearchAI;
         List<state> result;
+        MyComboBoxPanel myComboxPanel;
         public AIHuaRongDao()
         {
             InitializeComponent();
+            myComboxPanel = new MyComboBoxPanel();
             //下拉菜单初始化
             comboBoxLevel.Items.Add("简单");
             comboBoxLevel.Items.Add("中等");
             comboBoxLevel.Items.Add("困难");
             //默认简单
             comboBoxLevel.SelectedItem = comboBoxLevel.Items[0];
-
         }
       
-       
         private void Form1_Load(object sender, EventArgs e)
         {          
             //显示默认设置
-            MyComboBoxPanel myPanel = new MyComboBoxPanel((string)comboBoxLevel.SelectedItem);
-            foreach (var one in myPanel.list)
-            {               
-                    comboBoxPanel.Items.Add(one.name);
+            myComboxPanel.initPanel(comboBoxLevel.SelectedItem.ToString());   
+            //默认选中第一个
+            for (int i = 0; i < myComboxPanel.list.Count;i++ ) 
+            {
+                comboBoxPanel.Items.Add(myComboxPanel.list[i].name);
             }
-            comboBoxPanel.SelectedItem = comboBoxPanel.Items[0];
-        
-            //先建一个界面类
-            mypanel = new iPanel(new StartPanel((string)comboBoxPanel.SelectedItem));
-            myAI = new StateList(mypanel);
-            result = new List<state>();
-            // 显示初始化方格的位置    
-            showState(mypanel.state0,1,0);            
-            
+            comboBoxPanel.SelectedItem = myComboxPanel.list[0].name;
+         
         }
 
         private void btnMove_Click(object sender, EventArgs e)
@@ -67,88 +61,90 @@ namespace AIHuaRongDao
             //-----------------
             //myAI.sucStateList = myAI.ClosedList;
             //---------------------
-            byte sumcount = (byte)myAI.sucStateList.Count;
-            showState(mypanel.state0, myAI.sucStateList[sumcount - 1].selectID,0);
+            byte sumcount = (byte)mySearchAI.sucStateList.Count;
+            showState(mypanel.FirstState, mySearchAI.sucStateList[sumcount - 1].selectID,0);
             for (int i = sumcount - 1; i > 0; i--)
             {
                 //int a = sumcount - i;
                 //showStep.Text = a.ToString();
-                showState(myAI.sucStateList[i], myAI.sucStateList[i - 1].selectID,sumcount - i);
+                showState(mySearchAI.sucStateList[i], mySearchAI.sucStateList[i - 1].selectID,sumcount - i);
             }
-            showState(myAI.sucStateList[0], 1,sumcount);           
+            showState(mySearchAI.sucStateList[0], 1,sumcount);           
           
         }
 
-        private void showBFSAndDFS(searchType flagtype) 
-        {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            bool flag ;
-            if (flagtype ==searchType.BFS) 
-            {
-                flag = myAI.BFS();
-            } 
-            else
-            {
-                flag = myAI.DFS();
-            }
+        //private void showBFSAndDFS(searchType flagtype) 
+        //{
+        //    Stopwatch sw = new Stopwatch();
+        //    sw.Start();
+        //    bool flag ;
+        //    if (flagtype ==searchType.BFS) 
+        //    {
+        //        flag = myAI.BFS();
+        //    } 
+        //    else
+        //    {
+        //       flag = myAI.DFS();
+        //    }
            
 
-            sw.Stop();
-            TimeSpan ts2 = sw.Elapsed;
-            textBoxtimeShow.Text = ts2.TotalSeconds.ToString();
+        //    sw.Stop();
+        //    TimeSpan ts2 = sw.Elapsed;
+        //    textBoxtimeShow.Text = ts2.TotalSeconds.ToString();
 
-            if (flag)
+        //    if (flag)
+        //    {
+        //        result = myAI.sucStateList;
+        //        txtShowCount.Text = myAI.searchCount.ToString();
+        //        txtPath.Text = result.Count.ToString();
+        //        int count = myAI.ClosedList.Count + myAI.OpenList.Count;
+        //        txtShowCount.Text = count.ToString();
+        //    }
+        //    else
+        //    {
+        //        //输出找不到答案
+        //    }
+        //}
+        private void btnBFS_Click(object sender, EventArgs e)
+        {//广度优先搜索
+            mySearchAI.searchAnswer(SearchType.BFS);
+            panelShow();
+        }
+
+        private void btnDFS_Click(object sender, EventArgs e)
+        {//深度优先搜索
+            mySearchAI.searchAnswer(SearchType.DFS);
+            panelShow();              
+        }
+        private void btnHS_Click(object sender, EventArgs e)
+        {//启发式搜索
+            mySearchAI.searchAnswer(SearchType.HS);
+            panelShow();
+        }
+        private void panelShow()
+        {
+            textBoxtimeShow.Text = mySearchAI.searchTime.ToString();
+
+            if (mySearchAI.isSucess)
             {
-                result = myAI.sucStateList;
-                txtShowCount.Text = myAI.searchCount.ToString();
+                result = mySearchAI.sucStateList;
+                txtShowCount.Text = mySearchAI.searchCount.ToString();
                 txtPath.Text = result.Count.ToString();
-                int count = myAI.ClosedList.Count + myAI.OpenList.Count;
+                int count = mySearchAI.searchCount;
                 txtShowCount.Text = count.ToString();
             }
             else
             {
                 //输出找不到答案
             }
-        }
-        private void btnBFS_Click(object sender, EventArgs e)
-        {//广度优先搜索
-            showBFSAndDFS(searchType.BFS);
-            //Stopwatch sw = new Stopwatch();
-            //sw.Start(); 
-            //bool flag = myAI.BFS();
-            //sw.Stop();
-            //TimeSpan ts2 = sw.Elapsed;
-            //textBoxtimeShow.Text = ts2.TotalSeconds.ToString();
-           
-            //if (flag)
+            //byte sumcount = (byte)mySearchAI.sucStateList.Count;
+            //showState(mypanel.state0, mySearchAI.sucStateList[sumcount - 1].selectID);
+            //for (int i = sumcount - 1; i > 0; i--)
             //{
-            //    result = myAI.sucStateList;
-            //    txtShowCount.Text = myAI.searchCount.ToString();
-            //    txtPath.Text = result.Count.ToString();
-            //    int count = myAI.ClosedList.Count+myAI.OpenList.Count;
-            //    txtShowCount.Text = count.ToString();
-            //}
-            //else
-            //{
-            //    //输出找不到答案
-            //}
-             
-
-            //byte sumcount = (byte)myAI.sucStateList.Count;
-            //showState(mypanel.state0, myAI.sucStateList[sumcount-1].selectID);
-            //for (int i = sumcount-1; i > 0; i--)
-            //{
-            //    showState(myAI.sucStateList[i],myAI.sucStateList[i-1].selectID);
+            //    showState(myAI.sucStateList[i], myAI.sucStateList[i - 1].selectID);
             //}
             //showState(myAI.sucStateList[0], 1);
         }
-
-        private void btnDFS_Click(object sender, EventArgs e)
-        {//深度优先搜索
-            showBFSAndDFS(searchType.DFS);                  
-        }
-
 
         private Panel tranPanel(int id) 
         {//根据ID找到人物所在面板
@@ -255,32 +251,37 @@ namespace AIHuaRongDao
         }
 
     
-       private void comboBoxPanel_SelectedIndexChanged(object sender, EventArgs e)
-       {
-           MyComboBoxPanel item = comboBoxPanel.SelectedItem as MyComboBoxPanel;
-           // 执行操作
-           //item.Action();
-       }
-
        private void comboBoxLevel_SelectedIndexChanged(object sender, EventArgs e)
-       {
+       {//设置难度后更新布局
            comboBoxPanel.Items.Clear();
-           MyComboBoxPanel myPanel = new MyComboBoxPanel((string)comboBoxLevel.SelectedItem);
-           foreach (var one in myPanel.list)
+           ////重新设置list          
+           string levelNow = comboBoxLevel.SelectedItem.ToString();
+           myComboxPanel.initPanel(levelNow);
+           //默认选中第一个
+           for (int i = 0; i < myComboxPanel.list.Count; i++)
            {
-               comboBoxPanel.Items.Add(one.name);
+               comboBoxPanel.Items.Add(myComboxPanel.list[i].name);
            }
+           comboBoxPanel.SelectedItem = myComboxPanel.list[0].name;             
        }
 
        private void btnselectOpening_Click(object sender, EventArgs e)
        {  //确认布局
+          
+
+           //comboBoxPanel.SelectedItem = myPanel.list[0].name;
+           StartPanel chose = myComboxPanel.list[comboBoxPanel.SelectedIndex];
            //先建一个界面类
-           mypanel = new iPanel(new StartPanel((string)comboBoxPanel.SelectedItem));
-           myAI = new StateList(mypanel);
-           result = new List<state>();
+           mypanel = new iPanel(chose); 
+           //初始化搜索类
+           mySearchAI = new Search(mypanel);
+       
+           //result = new List<state>();
            // 显示初始化方格的位置    
-           showState(mypanel.state0, 1, 0);       
+           showState(mypanel.FirstState, 1, 0);     
        }
+
+    
 
     }
 }

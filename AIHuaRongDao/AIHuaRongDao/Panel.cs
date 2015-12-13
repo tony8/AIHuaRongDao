@@ -21,7 +21,9 @@ namespace AIHuaRongDao
    * 6.黄忠  日
    * 7.8.9.10 小兵 口
       */
-   
+   /// <summary>
+   /// 界面类，规定初始和结束状态
+   /// </summary>
 
     class iPanel
     {
@@ -34,8 +36,8 @@ namespace AIHuaRongDao
         //每个人物方格的位置
         public static Point[,] position;
         //标记索引位置是否可用
-        public state state0;
-       
+        public state FirstState;
+        public state SuccessState;
         public iPanel(StartPanel StartPanelnow)
         {
             //初始化每个方格的位置
@@ -48,11 +50,10 @@ namespace AIHuaRongDao
                     position[j, i] = new Point(startX + 100 * i, startY + 100 * j);
                 }
             }
-
+            //初始化开始状态和结束状态
+            initStateStartEnd(StartPanelnow);
            
-            //System.Windows.Forms.Form.comboBoxLevel.Items.Add();
-            //System.Windows.Forms.Form.comboBoxPanel.Item.Add("111111");
-            //ComboBoxPanel.Items.Add(""); 
+        
             //byte[,] PlState = new byte[5, 4] 
             //{ //初始化数表，即  
               
@@ -63,11 +64,7 @@ namespace AIHuaRongDao
             //    //{ 5, 1, 1, 6 },
             //    //{ 5, 9, 10, 6 }
             //};
-            state0.selectID = 1;
-            state0.FatherID = 1;
-            state0.sID = 1;            
-            //state0.plstateNum = state.Plcomputer2Num(state.plShow2computer(PlState));
-            state0.plstateNum = state.Plcomputer2Num(state.plShow2computer(StartPanelnow.PlState));
+           
 
             //byte[,] btemp = new byte[5, 4];
             //byte[,] bshow = new byte[5, 4];
@@ -77,6 +74,26 @@ namespace AIHuaRongDao
             //bshow = state.plComputer2show(btemp);
             //byte id = state.correctSelectID(bshow,1);
         }
-           
+
+        public void initStateStartEnd(StartPanel StartPanelnow) 
+        {
+            FirstState.selectID = 1;
+            FirstState.FatherID = 1;
+            FirstState.sID = 1;
+            //state0.plstateNum = state.Plcomputer2Num(state.plShow2computer(PlState));
+            FirstState.plstateNum = state.Plcomputer2Num(state.plShow2computer(StartPanelnow.PlState));
+
+            //初始化结束状态
+            byte[,] finishState = new byte[5, 4] 
+            { //初始化数表，即  
+                { 11, 11, 11, 11}, 
+                { 11, 11, 11, 11},
+                { 11, 11, 11, 11}, 
+                { 11, 1, 1, 11},
+                { 11, 1, 1, 11} 
+            };
+            SuccessState.plstateNum = state.Plcomputer2Num(finishState);
+            SuccessState.selectID = 1;
+        }
     }   
 }
